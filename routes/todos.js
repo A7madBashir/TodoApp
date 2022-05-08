@@ -12,15 +12,6 @@ const {
 } = require("../models/todo");
 const { Users } = require("../models/user");
 
-router.post("/AllTodo", async (req, res) => {
-  const { username } = req.body;
-  let user = await Users.findOne({ name: username });
-  if (!user) return res.status(400).send("No user registered with this name.");
-  // const result =await getSingleTodo(todoName,(user._id).toString());
-  const result = await getAllTodo(user._id.toString());
-  res.status(202).send(result);
-});
-
 router.post("/AddTodo", validate(validateTodo), async (req, res) => {
   const { todoName, username } = req.body;
   let user = await Users.findOne({ name: username });
@@ -53,5 +44,6 @@ router.delete("/RemoveTodo", async (req, res) => {
   if (result) res.status(202).send("Done");
   else res.status(404).send("something goes wrong");
 });
+
 
 module.exports = router;
